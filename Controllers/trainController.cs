@@ -17,8 +17,18 @@ namespace TestNetApi.Controllers
             return TrainingHandler.GetTrainStatus(id);
         }
 
-        [HttpPost("{id}")]
-        public void Post([FromBody] string value, int id)
+        [HttpGet("train/{id}")]
+        public async Task GetTrain(int id)
+        {
+            string url = "http://localhost:8081/getData/";
+            using HttpClient client = new HttpClient();
+            using HttpResponseMessage response = await client.GetAsync(url);
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(responseBody);
+        }
+
+        [HttpPost]
+        public void Post([FromBody] string value)
         {
             try
             {
